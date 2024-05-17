@@ -17,11 +17,17 @@ const { authenticateToken } = require("./utilities");
 
 app.use(express.json());
 
-app.use(
-  cors({
-    origin: "*",
-  })
-);
+// app.use(
+//   cors({
+//     origin: "*",
+//   })
+// );
+
+app.use(cors({
+  origin: 'https://gearzinote.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.get("/", (req, res) => {
   res.json({ data: "hello" });
