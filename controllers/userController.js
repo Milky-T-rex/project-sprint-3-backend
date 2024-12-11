@@ -36,6 +36,9 @@ const loginUser = async (req, res) => {
     }
 
     const accessToken = createToken(userInfo._id);
+    userInfo.tokens = userInfo.tokens.concat({ token: accessToken });
+    await userInfo.save();
+
     return res.json({
       error: false,
       message: "Login สำเร็จ!",
@@ -79,10 +82,14 @@ const registerUser = async (req, res) => {
       fullName,
       email,
       password: hashedPassword,
+      tokens: [],
     });
 
     await newUser.save();
     const accessToken = createToken(newUser._id);
+
+    newUser.tokens = newUser.tokens.concat({ token: accessToken });
+    await newUser.save();
 
     return res.status(201).json({
       error: false,

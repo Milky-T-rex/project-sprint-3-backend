@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import connectDB from "./config/mongodb.js";
+import connectCloudinary from "./config/cloudinary.js";
 import userRouter from "./route/userRoute.js";
 import cartRouter from "./route/cartRoute.js";
 import productRouter from "./route/productRoute.js";
@@ -11,6 +12,7 @@ const port = process.env.PORT || 8000;
 
 //Service connections
 connectDB();
+connectCloudinary();
 
 app.use(express.json());
 
