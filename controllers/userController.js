@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import userModel from "../models/userModel.js";
+import tokenModel from "../models/tokenModel.js";
 
 // ฟังก์ชันสร้าง Token
 const createToken = (id) => {
@@ -36,8 +37,20 @@ const loginUser = async (req, res) => {
     }
 
     const accessToken = createToken(userInfo._id);
-    userInfo.tokens = userInfo.tokens.concat({ token: accessToken });
-    await userInfo.save();
+
+    // เก็บ Token ลงในฐานข้อมูล
+    const tokenExpiryDate = new Date();
+    tokenExpiryDate.setHours(tokenExpiryDate.getHours() + 1); // กำหนดอายุ Token เป็น 1 ชั่วโมง
+
+    const newToken = new tokenModel({
+      userId: userInfo._id,
+      token: accessToken,
+      expiresAt: tokenExpiryDate,
+    });
+
+    await newToken.save(); // บันทึก Token ลงDB
+
+    console.log(`Token for user ${userInfo._id} saved successfully at ${new Date().toLocaleString()}`);
 
     return res.json({
       error: false,
@@ -45,7 +58,7 @@ const loginUser = async (req, res) => {
       accessToken,
     });
   } catch (error) {
-    res.status(500).json({ error: true, message: "เกิดข้อผิดพลาด" });
+    res.status(500).json({ error: true, message: "เกิดข้อผิดพลาด !" });
   }
 };
 
@@ -82,13 +95,8 @@ const registerUser = async (req, res) => {
       fullName,
       email,
       password: hashedPassword,
-      tokens: [],
     });
 
-    await newUser.save();
-    const accessToken = createToken(newUser._id);
-
-    newUser.tokens = newUser.tokens.concat({ token: accessToken });
     await newUser.save();
 
     return res.status(201).json({
