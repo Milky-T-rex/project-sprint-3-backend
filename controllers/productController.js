@@ -19,6 +19,7 @@ export const getProductById = async (req, res) => {
     }
     res.status(200).json(product);
   } catch (error) {
+
     res.status(500).json({ message: 'Error fetching product', error: error.message });
   }
 };
@@ -41,9 +42,17 @@ export const getProductsByCategory = async (req, res) => {
 
 // เพิ่มสินค้าใหม่
 export const createProduct = async (req, res) => {
-  const { name, price, description, image, category } = req.body;
+  const { name, description, category, image, ingredients, taste, id } = req.body;
   try {
-    const newProduct = new Product({ name, price, description, image, category });
+    const newProduct = new Product({
+      name,
+      description,
+      category,
+      image,
+      ingredients,
+      taste,
+      id,
+    });
     await newProduct.save();
     res.status(201).json({ message: 'Product created successfully', product: newProduct });
   } catch (error) {

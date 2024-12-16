@@ -13,6 +13,7 @@ const authenticateToken = (req, res, next) => {
       return res.status(403).json({ error: true, message: "Token ไม่ผ่านการตรวจสอบ" });
     }
     req.user = user;
+    console.log(req.user)
     next();
   });
 };

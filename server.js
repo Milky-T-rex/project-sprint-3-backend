@@ -16,29 +16,30 @@ connectCloudinary();
 
 app.use(express.json());
 
-const allowedOrigins = [
-  "https://art-nakkk-admin-frontend.vercel.app",// For local development
-  "https://art-nakkk-user-frontend.vercel.app",
-  "http://localhost:5173",
-  "http://localhost:5174",
-];
+// const allowedOrigins = [
+//   "https://art-nakkk-admin-frontend.vercel.app",// For local development
+//   "https://art-nakkk-user-frontend.vercel.app",
+//   "http://localhost:5173",
+//   "http://localhost:5174",
+// ];
 
 // Configure CORS
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      // Allow requests with no origin (e.g., mobile apps or curl)
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true); // Allow the origin
-      } else {
-        callback(new Error("Not allowed by CORS")); // Block the origin
-      }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true, // Allow cookies or Authorization headers
-  })
-);
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       // Allow requests with no origin (e.g., mobile apps or curl)
+//       if (!origin) return callback(null, true);
+//       if (allowedOrigins.includes(origin)) {
+//         callback(null, true); // Allow the origin
+//       } else {
+//         callback(new Error("Not allowed by CORS")); // Block the origin
+//       }
+//     },
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     credentials: true, // Allow cookies or Authorization headers
+//   })
+// );
+app.use(cors());
 
 app.use("/api/user", userRouter);
 app.use("/api/cart", cartRouter);
