@@ -1,15 +1,18 @@
 import express from 'express';
-import { addItemToCart, getCart, removeItemFromCart } from '../controllers/cartController.js';
+import { addItemToCart, checkout, getCart, removeItemFromCart } from '../controllers/cartController.js';
+import { authenticateToken } from '../middleware/utilities.js';
 
 const cartRouter = express.Router();
 
 // เพิ่มสินค้าในตะกร้า
-cartRouter.post('/', addItemToCart);
+cartRouter.post('/',authenticateToken, addItemToCart);
 
 // ดูตะกร้าสินค้าของผู้ใช้
-cartRouter.get('/', getCart);
+cartRouter.get('/',authenticateToken, getCart);
 
 // ลบสินค้าออกจากตะกร้า
-cartRouter.delete('/', removeItemFromCart);
+cartRouter.delete('/',authenticateToken, removeItemFromCart);
+
+cartRouter.post('/checkout',authenticateToken, checkout); 
 
 export default cartRouter;
