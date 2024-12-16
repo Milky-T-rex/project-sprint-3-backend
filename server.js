@@ -40,13 +40,12 @@ const allowedOrigins = [
 //   })
 // );
 
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: "*", // หรือใส่ URL ของ Frontend แทน เช่น https://your-frontend.com
+  methods: ["GET", "POST", "PUT", "DELETE"],
+};
+
+app.use(cors(corsOptions));
 
 app.use("/api/user", userRouter);
 app.use("/api/cart", cartRouter);
