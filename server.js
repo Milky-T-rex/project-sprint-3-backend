@@ -16,12 +16,12 @@ connectCloudinary();
 
 app.use(express.json());
 
-// const allowedOrigins = [
-//   "https://art-nakkk-admin-frontend.vercel.app",// For local development
-//   "https://art-nakkk-user-frontend.vercel.app",
-//   "http://localhost:5173",
-//   "http://localhost:5174",
-// ];
+const allowedOrigins = [
+  "https://sprint-2-frontend-teerathep-ngampukdeekuls-projects.vercel.app",// For local development
+  "https://sprint-2-frontend-sudawan-s-projects.vercel.app",
+  "http://localhost:5173",
+  "http://localhost:5174",
+];
 
 // Configure CORS
 // app.use(
@@ -39,7 +39,14 @@ app.use(express.json());
 //     credentials: true, // Allow cookies or Authorization headers
 //   })
 // );
-app.use(cors());
+
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 app.use("/api/user", userRouter);
 app.use("/api/cart", cartRouter);
