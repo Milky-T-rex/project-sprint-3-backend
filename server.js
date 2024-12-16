@@ -6,6 +6,7 @@ import connectCloudinary from "./config/cloudinary.js";
 import userRouter from "./route/userRoute.js";
 import cartRouter from "./route/cartRoute.js";
 import productRouter from "./route/productRoute.js";
+import reviewRouter from "./route/reviewRoute.js";
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -51,6 +52,7 @@ app.use(
 app.use("/api/user", userRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/product", productRouter);
+app.use("/review", reviewRouter);
 
 app.get("/", (req, res) => {
   res.status(200).json({ data: "API ทำงานปกติ" });
