@@ -102,7 +102,6 @@ const registerUser = async (req, res) => {
     return res.status(201).json({
       error: false,
       message: "Registration Successful",
-      accessToken,
     });
   } catch (error) {
     res.status(500).json({ error: true, message: "เกิดข้อผิดพลาด" });
